@@ -1,0 +1,9 @@
+.idea
+.venv
+__pycache__
+handlers/__pycache__
+database/__pycache__
+keyboards/__pycache__
+filters/__pycache__
+database/database.db
+config.py
