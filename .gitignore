@@ -1,5 +1,6 @@
 .idea
 .venv
+.gitignore
 __pycache__
 handlers/__pycache__
 database/__pycache__
