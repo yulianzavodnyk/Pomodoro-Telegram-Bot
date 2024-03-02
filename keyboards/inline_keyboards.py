@@ -1,11 +1,11 @@
-__all__ = ("build_pomodoro_markup", )
+__all__ = ("build_timer_markup",)
 
 from aiogram.types import InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
-def build_pomodoro_markup() -> InlineKeyboardMarkup:
+def build_timer_markup() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
-    builder.button(text="⏳", callback_data="show_pomodoro_time_left")
+    builder.button(text="⏳", callback_data="show_time_left")
     return builder.as_markup()
 

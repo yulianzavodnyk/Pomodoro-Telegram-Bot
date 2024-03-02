@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import configparser
 
 from aiogram import Bot, Dispatcher
 from aiogram.client import bot
@@ -7,11 +8,13 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
 from handlers import master_router
-from config import BOT_TOKEN
-from database.data import init_db, end_all_users_active_timers, get_language
+from database.data import init_db, end_all_users_active_timers
+
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 bot = Bot(
-    token=BOT_TOKEN,
+    token=config.get('default', 'BOT_TOKEN'),
     default=DefaultBotProperties(parse_mode=ParseMode.HTML)
 )
 
@@ -24,14 +27,10 @@ async def main():
 
 
 async def database_changes():
-    text = {
-        "eng": "Timer ended",
-        "ukr": "Таймер закінчився"
-    }
     while True:
         ended_timer_users_id = await end_all_users_active_timers()
         for user_id in ended_timer_users_id:
-            await bot.send_message(user_id, text[get_language(user_id)])
+            await bot.send_message(user_id, "Timer ended✅")
         await asyncio.sleep(0.1)
 
 
