@@ -57,7 +57,7 @@ async def check_activate_user_timer(user_id: int):
                           (user_id,)).fetchone()[0]
 
 
-async def end_all_users_active_timers():
+async def end_all_users_ended_timers():
     max_id = cursor.execute("SELECT MAX(id) FROM user_data").fetchall()[0][0]
     users_id_list = []
     if max_id:

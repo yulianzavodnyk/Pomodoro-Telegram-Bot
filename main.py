@@ -8,7 +8,7 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
 from handlers import master_router
-from database.data import init_db, end_all_users_active_timers
+from database.data import init_db, end_all_users_ended_timers
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -28,8 +28,8 @@ async def main():
 
 async def database_changes():
     while True:
-        ended_timer_users_id = await end_all_users_active_timers()
-        for user_id in ended_timer_users_id:
+        ended_timer_users_ids = await end_all_users_ended_timers()
+        for user_id in ended_timer_users_ids:
             await bot.send_message(user_id, "Timer ended✅")
         await asyncio.sleep(0.1)
 
