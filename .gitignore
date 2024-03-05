@@ -6,4 +6,3 @@ database/__pycache__
 keyboards/__pycache__
 token.txt
 database/database.db
-config.ini
