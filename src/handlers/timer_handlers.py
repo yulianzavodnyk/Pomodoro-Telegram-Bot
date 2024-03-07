@@ -2,8 +2,8 @@ from aiogram import Router
 from aiogram.types import Message
 from aiogram.filters import Command
 
-from database.data import get_last_timer_duration, check_activate_user_timer, set_timer, add_user
-from keyboards.inline_keyboards import build_timer_markup
+from src.database.data import get_last_timer_duration, check_activate_user_timer, set_timer, add_user
+from src.keyboards.inline_keyboards import build_timer_markup
 
 router = Router(name=__name__)
 
