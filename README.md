@@ -17,7 +17,7 @@ docker-compose up
 * Then run those commands
 ```
 pip install -r requirements.txt
-python .\src\main.py
+python main.py
 ```
 
 ## What this bot can do?

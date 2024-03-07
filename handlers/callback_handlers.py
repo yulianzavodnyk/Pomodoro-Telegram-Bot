@@ -1,7 +1,7 @@
 from aiogram import Router, F
 from aiogram.types import CallbackQuery
 
-from src.database.data import calculate_time_left, check_activate_user_timer
+from database.data import calculate_time_left, check_activate_user_timer
 
 router = Router(name=__name__)
 
