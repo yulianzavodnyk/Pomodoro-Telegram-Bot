@@ -10,13 +10,12 @@ from aiogram.enums import ParseMode
 from handlers import master_router
 from database.data import init_db, end_all_users_ended_timers
 
-global bot
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 
 async def main():
     try:
-        config = configparser.ConfigParser()
-        config.read('config.ini')
         bot = Bot(
             token=config.get('default', 'BOT_TOKEN'),
             default=DefaultBotProperties(parse_mode=ParseMode.HTML)
@@ -42,6 +41,10 @@ async def main():
 
 
 async def database_changes():
+    bot = Bot(
+        token=config.get('default', 'BOT_TOKEN'),
+        default=DefaultBotProperties(parse_mode=ParseMode.HTML)
+    )
     while True:
         ended_timer_users_ids = await end_all_users_ended_timers()
         for user_id in ended_timer_users_ids:

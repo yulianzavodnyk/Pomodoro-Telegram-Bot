@@ -1,12 +1,16 @@
 # Pomodoro-Telegram-Bot
 This telegram bot helps you manage your time by setting up timers to stay focused on your tasks
 
+* [How to run](#how-to-run)
+* [How to run without Docker](#how-to-run-without-docker)
+* [What this bot can do?](#what-this-bot-can-do)
+
 ## How to run
 * Clone git repository
 * Change the [config.ini](config.ini) file with you value: `BOT_TOKEN`
 * Install and run [Docker](https://www.docker.com/)
 * Build Docker image and run Docker container using those commands
-```
+```docker
 docker build --tag pomodorobot .
 docker-compose up
 ```
@@ -15,7 +19,7 @@ docker-compose up
 ## How to run without Docker
 * Create the virtual environments
 * Then run those commands
-```
+```commandline
 pip install -r requirements.txt
 python main.py
 ```
