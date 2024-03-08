@@ -17,8 +17,8 @@ docker-compose up
 * Once the container is running go to Telegram and send the `/start` command to your bot
 
 ## How to run without Docker
-* Create the virtual environments
-* Then run those commands
+* Create the virtual environment
+* Run those commands
 ```
 pip install -r requirements.txt
 python main.py
