@@ -13,18 +13,18 @@ from database.data import init_db, end_all_users_ended_timers
 config = configparser.ConfigParser()
 config.read('config.ini')
 
+if not config.get('default', 'BOT_TOKEN'):
+    logging.basicConfig(level=logging.ERROR, format='%(levelname)s - %(message)s')
+    logging.error("config.ini: BOT_TOKEN is None, please write it")
+    sys.exit(1)
+
+bot = Bot(
+    token=config.get('default', 'BOT_TOKEN'),
+    default=DefaultBotProperties(parse_mode=ParseMode.HTML)
+)
+
 
 async def main():
-    try:
-        bot = Bot(
-            token=config.get('default', 'BOT_TOKEN'),
-            default=DefaultBotProperties(parse_mode=ParseMode.HTML)
-        )
-    except Exception:
-        logging.basicConfig(level=logging.ERROR, format='%(levelname)s - %(message)s')
-        logging.error("config.ini: BOT_TOKEN is None, please write it")
-        sys.exit(1)
-
     try:
         dp = Dispatcher()
         dp.include_router(master_router)
@@ -41,10 +41,6 @@ async def main():
 
 
 async def database_changes():
-    bot = Bot(
-        token=config.get('default', 'BOT_TOKEN'),
-        default=DefaultBotProperties(parse_mode=ParseMode.HTML)
-    )
     while True:
         ended_timer_users_ids = await end_all_users_ended_timers()
         for user_id in ended_timer_users_ids:
