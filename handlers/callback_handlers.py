@@ -6,6 +6,7 @@ from database.data import calculate_time_left, check_activate_user_timer
 router = Router(name=__name__)
 
 
+# handling callback from button that show how much time is left till the end of the timer
 @router.callback_query(F.data == "show_time_left")
 async def show_alert_time_left(call: CallbackQuery):
     user_id = call.from_user.id

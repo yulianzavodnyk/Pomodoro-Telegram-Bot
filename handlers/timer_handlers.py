@@ -7,9 +7,11 @@ from keyboards.inline_keyboards import build_timer_markup
 
 router = Router(name=__name__)
 
+# handling /stop and /repeat commands and commands that start timer
+
 
 @router.message(lambda message: message.text.isnumeric())
-async def numbers_handle(message: Message):
+async def start_timer_with_some_number(message: Message):
     user_id = message.from_user.id
     await add_user(user_id)
     duration = int(message.text)

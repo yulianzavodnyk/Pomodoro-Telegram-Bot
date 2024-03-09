@@ -7,6 +7,8 @@ from keyboards.keyboards import *
 
 router = Router(name=__name__)
 
+# handling /start and /help commands
+
 
 @router.message(CommandStart())
 async def start(message: Message):

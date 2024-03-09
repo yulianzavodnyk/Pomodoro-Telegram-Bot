@@ -1,11 +1,12 @@
 import sqlite3
 from datetime import datetime, timedelta
 
-conn = sqlite3.connect('database/database.db')
+conn = sqlite3.connect('database/database.db')  # connect to database file
 cursor = conn.cursor()
 
 
 def init_db(force: bool = False):
+    """ Creating database if not exists"""
     if force:
         cursor.execute('DROP TABLE IF EXISTS user_data')
     cursor.execute('''
@@ -20,12 +21,23 @@ def init_db(force: bool = False):
 
 
 async def add_user(user_id: int):
+    """
+    Adding user to database
+    :param user_id: user id
+    """
     if cursor.execute("SELECT user_id FROM user_data WHERE user_id = ?", (user_id,)).fetchone() is None:
         cursor.execute("INSERT INTO user_data (user_id) VALUES (?)", (user_id,))
         conn.commit()
 
 
 async def set_timer(user_id: int, activation: bool, time=None):
+    """
+    Setting user timer
+    :param user_id: user id
+    :param activation: True means timer will be activated, False means timer will be deactivated
+    :param time: you need to specify this param if activation == True,
+    write it with time you want set timer
+    """
     cursor.execute("UPDATE user_data SET pomodoro_activation = ? WHERE user_id = ?",
                    (int(activation == True), user_id))
     if activation and time:
@@ -34,12 +46,22 @@ async def set_timer(user_id: int, activation: bool, time=None):
     conn.commit()
 
 
-async def get_last_timer_duration(user_id: int):
+async def get_last_timer_duration(user_id: int):  #
+    """
+    Return duration of last active timer
+    :param user_id: user id
+    :return: int
+    """
     return cursor.execute("SELECT pomodoro_duration FROM user_data WHERE user_id = ?",
                           (user_id,)).fetchone()[0]
 
 
 async def calculate_time_left(user_id: int):
+    """
+    Calculate how much time is left till the end of the timer
+    :param user_id: user id
+    :return: Tuple[int, int, int]
+    """
     user_time = cursor.execute("SELECT pomodoro_end_time FROM user_data WHERE user_id = ?",
                                (user_id,)).fetchone()[0]
 
@@ -53,11 +75,20 @@ async def calculate_time_left(user_id: int):
 
 
 async def check_activate_user_timer(user_id: int):
+    """
+    check if user have active timer
+    :param user_id: user id
+    :return: int
+    """
     return cursor.execute("SELECT pomodoro_activation FROM user_data WHERE user_id = ?",
                           (user_id,)).fetchone()[0]
 
 
 async def end_all_users_ended_timers():
+    """
+    Making a list of all users that have currently ended timer, and stop their timers
+    :return: List[int]
+    """
     max_id = cursor.execute("SELECT MAX(id) FROM user_data").fetchall()[0][0]
     users_id_list = []
     if max_id:
